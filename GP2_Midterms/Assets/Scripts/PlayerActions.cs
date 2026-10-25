@@ -16,10 +16,6 @@ public class PlayerSprites
 
 public class PlayerActions : MonoBehaviour, ISwitchable
 {
-    //The player must detect the nearest enemy within a limited range (e.g., using physics overlaps or distance checks).
-
-    //The player must smoothly rotate to face that nearest enemy.
-
     [Header("Player Sprites")]
     [SerializeField] private PlayerSprites playerSprites = new PlayerSprites();
 
@@ -47,9 +43,6 @@ public class PlayerActions : MonoBehaviour, ISwitchable
     [SerializeField] private Color greenTint = Color.green;
     [SerializeField] private Color violetTint = new Color(0.6f, 0.2f, 1f);
     [SerializeField] private ColorSet firstColor = ColorSet.Red;
-
-    /*[Header("Player Position")]
-    [SerializeField] private bool keepPlayerStationary = true;*/
 
     [Header("Losing")]
     private bool GameOverTriggered;

@@ -67,7 +67,6 @@ public class BulletProjectile : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Diagnostic: confirm physics updates are running.
         if (Time.frameCount % 30 == 0)
         {
             Debug.LogWarning(
@@ -115,17 +114,19 @@ public class BulletProjectile : MonoBehaviour
             Collider2D hitCollider = castHits[i].collider;
 
             if (hitCollider == null)
+            {
                 continue;
+            }
 
-            // Ignore the bullet's own object and children.
-            if (hitCollider.transform == transform ||
-                hitCollider.transform.IsChildOf(transform))
+            if (hitCollider.transform == transform || hitCollider.transform.IsChildOf(transform))
+            {
                 continue;
+            }
 
-            // Ignore the player who fired the bullet.
             if (hitCollider.GetComponentInParent<PlayerActions>() != null)
+            {
                 continue;
-
+            }
             Debug.LogWarning("BULLET HIT DETECTED: " + hitCollider.name);
 
             handleHit(hitCollider);

@@ -13,8 +13,6 @@ public class EnemySprites
 
 public abstract class EnemyBase : MonoBehaviour, IDamageable
 {
-    //standard enemy movement
-    //Spawn colored enemies that inherit from this abstract class and continuously move towards the player.
     [Header("Movement")]
     [SerializeField] protected float moveSpeed = 1f;
 
