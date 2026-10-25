@@ -33,7 +33,10 @@ public class PlayerActions : MonoBehaviour, ISwitchable
 
     [Header("Shooting")]
     [SerializeField] private BulletProjectile bulletPrefab;
-    [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform firePointUp;
+    [SerializeField] private Transform firePointDown;
+    [SerializeField] private Transform firePointLeft;
+    [SerializeField] private Transform firePointRight;
     [SerializeField] private float muzzleOffset = 0.5f;
     [SerializeField] private float fireRate = 2f;
     [SerializeField] private float bulletSpeed = 5f;
@@ -134,7 +137,10 @@ public class PlayerActions : MonoBehaviour, ISwitchable
                 aimDirection = desiredDirection;
             }
 
-            if (Time.time >= nextFireTime)
+            // Manual shooting: Spacebar or left mouse button.
+            if ((Input.GetKeyDown(KeyCode.Space) ||
+                 Input.GetMouseButtonDown(0)) &&
+                Time.time >= nextFireTime)
             {
                 Shoot();
             }
@@ -233,16 +239,19 @@ public class PlayerActions : MonoBehaviour, ISwitchable
 
         ColorCycle();
 
-        Vector2 direction = aimDirection.normalized;
+        Vector2 direction = aimDirection.sqrMagnitude > 0.0001f ? aimDirection.normalized : Vector2.down;
+
+        Transform selectedFirePoint = getFirePointDirection(direction);
 
         Vector3 spawnPosition;
 
-        if (firePoint != null)
+        if (selectedFirePoint != null)
         {
-            spawnPosition = firePoint.position;
+            spawnPosition = selectedFirePoint.position;
         }
         else
         {
+            Debug.LogWarning("Appropriate firepoint is not assigned.");
             spawnPosition = transform.position + (Vector3)(direction * muzzleOffset);
         }
 
@@ -251,6 +260,16 @@ public class PlayerActions : MonoBehaviour, ISwitchable
         bullet.Initialize(direction, CurrentColor, bulletSpeed);
 
         nextFireTime = Time.time + Mathf.Max(0.1f, fireRate);
+    }
+
+    private Transform getFirePointDirection(Vector2 direction)
+    {
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        {
+            return direction.x >= 0f ? firePointRight : firePointLeft;
+        }
+
+        return direction.y >= 0f ? firePointUp : firePointDown;
     }
 
     public void ColorCycle()

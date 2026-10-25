@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1032713787673553038}
   - component: {fileID: 6927512575975755094}
+  - component: {fileID: 5579040826102983943}
   m_Layer: 0
   m_Name: Barrels2_1 (1)
   m_TagString: Untagged
@@ -91,3 +92,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &5579040826102983943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8403183512950304630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d28d4a16db50e104cb45f7f0d6d42368, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SortLayers
+  spriteRenderer: {fileID: 6927512575975755094}
+  sortingPoint: {fileID: 0}
+  orderrOffset: 0
+  precision: 100

@@ -179,9 +179,23 @@ public class GameManager : MonoBehaviour
 
         isGameOver = true;
 
+        if (finalScoreText != null)
+        {
+            finalScoreText.text = $"Final Score: {score}";
+            Debug.Log($"Final Score: {score}");
+        }
+        else
+        {
+            Debug.LogError("Final score not assigned!");
+        }
+
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("Game Over Panel not assigned!");
         }
 
         Time.timeScale = 0f;

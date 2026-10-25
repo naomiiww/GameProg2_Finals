@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -8754875219908030571}
   - component: {fileID: 1645591355991080174}
   - component: {fileID: 7521809605798179864}
+  - component: {fileID: -6955727508641387641}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -124,12 +125,12 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 2.98
+  m_Radius: 3.26
 --- !u!50 &1645591355991080174
 Rigidbody2D:
   serializedVersion: 5
@@ -171,7 +172,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BulletProjectile
   speed: 10
   lifetime: 5
-  redTint: {r: 1, g: 0, b: 0, a: 1}
-  blueTint: {r: 0, g: 0, b: 1, a: 1}
-  greenTint: {r: 0, g: 1, b: 0, a: 1}
-  violetTint: {r: 0.6, g: 0.2, b: 1, a: 1}
+  destroyEffectPrefab: {fileID: 8931582950042899878, guid: 58c005637782c7c4c9f0f4c54509c794, type: 3}
+  effectCleanupTime: 3
+--- !u!114 &-6955727508641387641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8706041535407011860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d28d4a16db50e104cb45f7f0d6d42368, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SortLayers
+  spriteRenderer: {fileID: 1525523625222102670}
+  sortingPoint: {fileID: 0}
+  orderrOffset: 0
+  precision: 100

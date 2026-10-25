@@ -27,6 +27,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] private Color greenTint = Color.green;
     [SerializeField] private Color violetTint = new Color(0.6f, 0.2f, 1f);
 
+    [Header("Death explosion")]
+    [SerializeField] private ParticleSystem deathEffectPrefab;
+    [SerializeField] private float deathEffectCleanupTime = 3f;
+
     [Header("Scoring")]
     [SerializeField] private int scoreValue = 5;
 
@@ -149,6 +153,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
         defeated = true;
 
+        spawnDeathExplosion(getDeathEffectColor(CurrentColor));
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.addScore(scoreValue);
@@ -159,5 +165,53 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         }
 
         Destroy(gameObject);
+    }
+
+    private Color getDeathEffectColor(ColorSet colorSet)
+    {
+        switch (colorSet)
+        {
+            case ColorSet.Red:
+                return Color.red;
+
+            case ColorSet.Blue:
+                return Color.blue;
+
+            case ColorSet.Green:
+                return Color.green;
+
+            case ColorSet.Violet:
+                return new Color(0.6f, 0.2f, 1f);
+
+            default:
+                return Color.white;
+        }
+    }
+
+    private void spawnDeathExplosion(Color color)
+    {
+        if (deathEffectPrefab == null)
+        {
+            Debug.LogWarning("Death effect not assigned!", this);
+            return;
+        }
+
+        ParticleSystem effect = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
+
+        effect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+        ParticleSystem[] systems = effect.GetComponentsInChildren<ParticleSystem>(true);
+
+        foreach (ParticleSystem system in systems)
+        {
+            system.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+            ParticleSystem.MainModule main = system.main;
+            main.startColor = color;
+        }
+
+        effect.Play(true);
+
+        Destroy(effect.gameObject, deathEffectCleanupTime);
     }
 }
